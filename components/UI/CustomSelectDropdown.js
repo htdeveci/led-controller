@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+// import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import {
   BACKGROUND_LIGHT,
   PRIMARY,
@@ -24,14 +25,14 @@ export default function CustomSelectDropdown({
         return (
           <View style={styles.dropdownButtonStyle}>
             {selectedItem && selectedItem.icon && (
-              <Icon
+              <MaterialIcons
                 name={selectedItem.icon}
                 style={styles.dropdownButtonIconStyle}
               />
             )}
             <Text style={styles.dropdownButtonTxtStyle}>{selectedItem}</Text>
-            <Icon
-              name={isOpened ? "chevron-up" : "chevron-down"}
+            <MaterialIcons
+              name={isOpened ? "expand-less" : "expand-more"}
               style={styles.dropdownButtonArrowStyle}
             />
           </View>
