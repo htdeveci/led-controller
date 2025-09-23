@@ -6,9 +6,9 @@ import CustomButton from "../UI/CustomButton";
 import CustomColorPicker from "../UI/CustomColorPicker";
 import CustomSelectDropdown from "../UI/CustomSelectDropdown";
 import { LINE_HEIGHT } from "../../globals/Constants";
-import { ERROR } from "../../globals/Colors";
+import { ERROR, GALA_RED, GALA_YELLOW } from "../../globals/Colors";
 
-export default function Split({ applyChanges, setApplyChanges }) {
+export default function Split({ applyChanges, setApplyChanges, applyGalaColors }) {
   const serverUrl = useSelector((state) => state.connection.serverUrl);
   const splitMode = {
     Horizontal: "Horizontal",
@@ -47,6 +47,8 @@ export default function Split({ applyChanges, setApplyChanges }) {
       setApplyChanges(false);
     }
   }, [applyChanges]);
+
+
 
   const fetchColors = async () => {
     try {
@@ -148,6 +150,11 @@ export default function Split({ applyChanges, setApplyChanges }) {
     setTempSelectedColor(tempColors);
   };
 
+  const soloIlGalaHandler = () => {
+    setSelectedColor([GALA_RED, GALA_YELLOW, GALA_YELLOW, GALA_RED]);
+    setTempSelectedColor([GALA_RED, GALA_YELLOW, GALA_YELLOW, GALA_RED]);
+  }
+
   return (
     <>
       <Modal visible={showColorPickerModal} transparent>
@@ -184,180 +191,213 @@ export default function Split({ applyChanges, setApplyChanges }) {
 
       {/* <TabView renderScene={renderScene} /> */}
       <View style={styles.container}>
-        <CustomSelectDropdown
-          data={Object.values(splitMode)}
-          onSelect={splitModeSelectHandler}
-          initialValue={selectedSplitMode}
-        />
+        <View style={styles.innerContainer}>
+          <CustomSelectDropdown
+            data={Object.values(splitMode)}
+            onSelect={splitModeSelectHandler}
+            initialValue={selectedSplitMode}
+          />
 
-        {selectedSplitMode === splitMode.Horizontal && (
-          <>
-            <CustomButton
-              bgColor={selectedColors[0]}
-              title="Top Color"
-              lineHeight={LINE_HEIGHT * 2}
-              onPress={openColorPickerModalHandler.bind(null, 0)}
-            />
 
-            <View style={{ alignItems: "center" }}>
-              <CustomButton
-                bgColor="#d1d1d1"
-                iconName="swap"
-                paddingHorizontal={12}
-                iconRotation={90}
-                onPress={swapColorsHandler.bind(null, 0)}
-              />
-            </View>
-
-            <CustomButton
-              bgColor={selectedColors[1]}
-              title="Bottom Color"
-              lineHeight={LINE_HEIGHT * 2}
-              onPress={openColorPickerModalHandler.bind(null, 1)}
-            />
-          </>
-        )}
-
-        {selectedSplitMode === splitMode.Vertical && (
-          <>
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 20,
-              }}
-            >
+          {selectedSplitMode === splitMode.Horizontal && (
+            <>
               <CustomButton
                 bgColor={selectedColors[0]}
-                title="Left Color"
+                title="Top Color"
                 lineHeight={LINE_HEIGHT * 2}
-                buttonStyle={{ flex: 1 }}
                 onPress={openColorPickerModalHandler.bind(null, 0)}
               />
 
-              <View style={{ justifyContent: "center" }}>
+              <View style={{ alignItems: "center" }}>
                 <CustomButton
                   bgColor="#d1d1d1"
                   iconName="swap"
                   paddingHorizontal={12}
+                  iconRotation={90}
                   onPress={swapColorsHandler.bind(null, 0)}
                 />
               </View>
 
               <CustomButton
                 bgColor={selectedColors[1]}
-                title="RIght Color"
+                title="Bottom Color"
                 lineHeight={LINE_HEIGHT * 2}
-                buttonStyle={{ flex: 1 }}
                 onPress={openColorPickerModalHandler.bind(null, 1)}
               />
-            </View>
-          </>
-        )}
+            </>
+          )}
 
-        {selectedSplitMode === splitMode.FourPieces && (
-          <>
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 20,
-              }}
-            >
-              <CustomButton
-                bgColor={selectedColors[0]}
-                title="Top Left Color"
-                lineHeight={LINE_HEIGHT * 2}
-                buttonStyle={{ flex: 1 }}
-                onPress={openColorPickerModalHandler.bind(null, 0)}
-              />
-
-              <View style={{ justifyContent: "center" }}>
-                <CustomButton
-                  bgColor="#d1d1d1"
-                  iconName="swap"
-                  paddingHorizontal={12}
-                  onPress={swapColorsHandler.bind(null, 0)}
-                />
-              </View>
-
-              <CustomButton
-                bgColor={selectedColors[1]}
-                title="Top RIght Color"
-                lineHeight={LINE_HEIGHT * 2}
-                buttonStyle={{ flex: 1 }}
-                onPress={openColorPickerModalHandler.bind(null, 1)}
-              />
-            </View>
-
-            <View
-              style={{
-                justifyContent: "space-between",
-                flexDirection: "row",
-              }}
-            >
+          {selectedSplitMode === splitMode.Vertical && (
+            <>
               <View
                 style={{
-                  width: 120,
-                  alignItems: "center",
+                  flexDirection: "row",
+                  gap: 20,
                 }}
               >
                 <CustomButton
-                  bgColor="#d1d1d1"
-                  iconName="swap"
-                  paddingHorizontal={12}
-                  iconRotation={90}
-                  onPress={swapColorsHandler.bind(null, 3)}
+                  bgColor={selectedColors[0]}
+                  title="Left Color"
+                  lineHeight={LINE_HEIGHT * 2}
+                  buttonStyle={{ flex: 1 }}
+                  onPress={openColorPickerModalHandler.bind(null, 0)}
+                />
+
+                <View style={{ justifyContent: "center" }}>
+                  <CustomButton
+                    bgColor="#d1d1d1"
+                    iconName="swap"
+                    paddingHorizontal={12}
+                    onPress={swapColorsHandler.bind(null, 0)}
+                  />
+                </View>
+
+                <CustomButton
+                  bgColor={selectedColors[1]}
+                  title="RIght Color"
+                  lineHeight={LINE_HEIGHT * 2}
+                  buttonStyle={{ flex: 1 }}
+                  onPress={openColorPickerModalHandler.bind(null, 1)}
+                />
+              </View>
+            </>
+          )}
+
+          {selectedSplitMode === splitMode.FourPieces && (
+            <>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 20,
+                }}
+              >
+                <CustomButton
+                  bgColor={selectedColors[0]}
+                  title="Top Left Color"
+                  lineHeight={LINE_HEIGHT * 2}
+                  buttonStyle={{ flex: 1 }}
+                  onPress={openColorPickerModalHandler.bind(null, 0)}
+                />
+
+                <View style={{ justifyContent: "center" }}>
+                  <CustomButton
+                    bgColor="#d1d1d1"
+                    iconName="swap"
+                    paddingHorizontal={12}
+                    onPress={swapColorsHandler.bind(null, 0)}
+                  />
+                </View>
+
+                <CustomButton
+                  bgColor={selectedColors[1]}
+                  title="Top RIght Color"
+                  lineHeight={LINE_HEIGHT * 2}
+                  buttonStyle={{ flex: 1 }}
+                  onPress={openColorPickerModalHandler.bind(null, 1)}
                 />
               </View>
 
               <View
                 style={{
-                  width: 120,
-                  alignItems: "center",
+                  justifyContent: "space-between",
+                  flexDirection: "row",
+                }}
+              >
+                <View
+                  style={{
+                    width: 120,
+                    alignItems: "center",
+                  }}
+                >
+                  <CustomButton
+                    bgColor="#d1d1d1"
+                    iconName="swap"
+                    paddingHorizontal={12}
+                    iconRotation={90}
+                    onPress={swapColorsHandler.bind(null, 3)}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    width: 50,
+                    alignItems: "center",
+                  }}
+                >
+                  <CustomButton
+                    bgColor="#33c452ff"
+                    iconName="swap"
+                    paddingHorizontal={12}
+                    onPress={swapColorsHandler.bind(null, 3)}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    width: 50,
+                    alignItems: "center",
+                  }}
+                >
+                  <CustomButton
+                    bgColor="#2636caff"
+                    iconName="swap"
+                    paddingHorizontal={12}
+                    onPress={swapColorsHandler.bind(null, 3)}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    width: 120,
+                    alignItems: "center",
+                  }}
+                >
+                  <CustomButton
+                    bgColor="#d1d1d1"
+                    iconName="swap"
+                    paddingHorizontal={12}
+                    iconRotation={90}
+                    onPress={swapColorsHandler.bind(null, 1)}
+                  />
+                </View>
+              </View>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap: 20,
                 }}
               >
                 <CustomButton
-                  bgColor="#d1d1d1"
-                  iconName="swap"
-                  paddingHorizontal={12}
-                  iconRotation={90}
-                  onPress={swapColorsHandler.bind(null, 1)}
+                  bgColor={selectedColors[2]}
+                  title="Bottom Left Color"
+                  lineHeight={LINE_HEIGHT * 2}
+                  buttonStyle={{ flex: 1 }}
+                  onPress={openColorPickerModalHandler.bind(null, 2)}
                 />
-              </View>
-            </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 20,
-              }}
-            >
-              <CustomButton
-                bgColor={selectedColors[2]}
-                title="Bottom Left Color"
-                lineHeight={LINE_HEIGHT * 2}
-                buttonStyle={{ flex: 1 }}
-                onPress={openColorPickerModalHandler.bind(null, 2)}
-              />
+                <View style={{ justifyContent: "center" }}>
+                  <CustomButton
+                    bgColor="#d1d1d1"
+                    iconName="swap"
+                    paddingHorizontal={12}
+                    onPress={swapColorsHandler.bind(null, 2)}
+                  />
+                </View>
 
-              <View style={{ justifyContent: "center" }}>
                 <CustomButton
-                  bgColor="#d1d1d1"
-                  iconName="swap"
-                  paddingHorizontal={12}
-                  onPress={swapColorsHandler.bind(null, 2)}
+                  bgColor={selectedColors[3]}
+                  title="Bottom RIght Color"
+                  lineHeight={LINE_HEIGHT * 2}
+                  buttonStyle={{ flex: 1 }}
+                  onPress={openColorPickerModalHandler.bind(null, 3)}
                 />
               </View>
+            </>
+          )}
+        </View>
 
-              <CustomButton
-                bgColor={selectedColors[3]}
-                title="Bottom RIght Color"
-                lineHeight={LINE_HEIGHT * 2}
-                buttonStyle={{ flex: 1 }}
-                onPress={openColorPickerModalHandler.bind(null, 3)}
-              />
-            </View>
-          </>
-        )}
+        <CustomButton title="solo il gala" onPress={soloIlGalaHandler} bgColor={GALA_RED} titleColor={GALA_YELLOW} rippleColor={GALA_YELLOW} />
       </View>
     </>
   );
@@ -367,8 +407,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 12,
-    gap: 20,
+    paddingBottom: 20,
     // backgroundColor: "red",
+    justifyContent: "space-between"
+  },
+  innerContainer: {
+    gap: 20,
   },
   colorPickerContainer: {
     gap: 20,

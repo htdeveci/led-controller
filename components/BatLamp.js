@@ -42,7 +42,10 @@ export default function BatLamp() {
   const [ipAddressForLed, setIpAddressForLed] = useState(serverIP);
 
   useEffect(() => {
-    connectLed();
+    if (__DEV__)
+      setIsLedConnected(true);
+    else
+      connectLed();
   }, []);
 
   const connectLed = async () => {
@@ -127,6 +130,7 @@ export default function BatLamp() {
             <Split
               applyChanges={applyChanges}
               setApplyChanges={setApplyChanges}
+
             />
           )}
 

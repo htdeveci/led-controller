@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import CustomColorPicker from "../UI/CustomColorPicker";
+import CustomButton from "../UI/CustomButton";
+import { FOOTBALL } from "../../globals/Colors";
+import { StyleSheet, View } from "react-native";
 
 export default function Static({ applyChanges, setApplyChanges }) {
   const serverUrl = useSelector((state) => state.connection.serverUrl);
@@ -59,13 +62,26 @@ export default function Static({ applyChanges, setApplyChanges }) {
 
   const onSelectColor = ({ hex }) => {
     // selectedColor.value = hex;
+    console.log(hex)
     setSelectedColor(hex);
   };
 
   return (
-    <CustomColorPicker
-      selectedColor={selectedColor}
-      onSelectColor={onSelectColor}
-    />
+    <View style={styles.container}>
+      <CustomColorPicker
+        selectedColor={selectedColor}
+        onSelectColor={onSelectColor}
+      />
+
+      <CustomButton title="Football Time" bgColor={FOOTBALL} onPress={onSelectColor.bind(null, { hex: FOOTBALL })} />
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingBottom: 20,
+    justifyContent: "space-between"
+  }
+});
