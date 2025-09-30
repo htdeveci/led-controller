@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
-import CustomColorPicker from "../UI/CustomColorPicker";
+import CustomColorPicker from "../UI/ColorPicker/CustomColorPicker";
 import CustomButton from "../UI/CustomButton";
 import { FOOTBALL } from "../../globals/Colors";
 import { StyleSheet, View } from "react-native";
@@ -61,8 +61,6 @@ export default function Static({ applyChanges, setApplyChanges }) {
   };
 
   const onSelectColor = ({ hex }) => {
-    // selectedColor.value = hex;
-    console.log(hex)
     setSelectedColor(hex);
   };
 
@@ -70,6 +68,7 @@ export default function Static({ applyChanges, setApplyChanges }) {
     <View style={styles.container}>
       <CustomColorPicker
         selectedColor={selectedColor}
+        setSelectedColor={setSelectedColor}
         onSelectColor={onSelectColor}
       />
 

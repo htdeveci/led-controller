@@ -14,3 +14,5 @@ export const GALA_RED = "#a32638";
 export const GALA_YELLOW = "#fcb514";
 
 export const FOOTBALL = "#46ff00";
+
+export const ICON_BACKGROUND = "#d1d1d1";

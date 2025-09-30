@@ -3,7 +3,8 @@ import { Pressable, StyleSheet, Switch, Text, View } from "react-native";
 import { colorKit } from "reanimated-color-picker";
 import { PRIMARY, PRIMARY_DARK, TEXT_LIGHT } from "../../globals/Colors";
 import { LINE_HEIGHT } from "../../globals/Constants";
-import AntDesign from "@expo/vector-icons/AntDesign";
+// import AntDesign from "@expo/vector-icons/AntDesign";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function CustomButton({
   onPress,
@@ -17,7 +18,6 @@ export default function CustomButton({
   switchState,
   iconName = false,
   iconSize = 24,
-  iconRotation = 0,
   paddingHorizontal = 20,
 }) {
   const [tColor, setTextColor] = useState(titleColor ? titleColor : TEXT_LIGHT);
@@ -57,11 +57,11 @@ export default function CustomButton({
       >
         <View style={styles.innerContainer}>
           {iconName && (
-            <AntDesign
+            <MaterialIcons
               name={iconName}
               size={iconSize}
               color={tColor}
-              style={{ transform: "rotate(" + iconRotation + "deg)" }}
+            // style={{ transform: "rotate(" + iconRotation + "deg)" }}
             />
           )}
 

@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 
 import CustomButton from "../UI/CustomButton";
-import CustomColorPicker from "../UI/CustomColorPicker";
+import CustomColorPicker from "../UI/ColorPicker/CustomColorPicker";
 import CustomSelectDropdown from "../UI/CustomSelectDropdown";
 import { LINE_HEIGHT } from "../../globals/Constants";
-import { ERROR, GALA_RED, GALA_YELLOW } from "../../globals/Colors";
+import { ERROR, GALA_RED, GALA_YELLOW, ICON_BACKGROUND } from "../../globals/Colors";
 
 export default function Split({ applyChanges, setApplyChanges, applyGalaColors }) {
   const serverUrl = useSelector((state) => state.connection.serverUrl);
@@ -47,8 +47,6 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
       setApplyChanges(false);
     }
   }, [applyChanges]);
-
-
 
   const fetchColors = async () => {
     try {
@@ -121,6 +119,22 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
           return [prev[2], prev[1], prev[0], prev[3]];
         });
         break;
+      case 4: // rotate right
+        setSelectedColor((prev) => {
+          return [prev[2], prev[0], prev[3], prev[1]];
+        });
+        setTempSelectedColor((prev) => {
+          return [prev[2], prev[0], prev[3], prev[1]];
+        });
+        break;
+      case 5: // rotate left
+        setSelectedColor((prev) => {
+          return [prev[1], prev[3], prev[0], prev[2]];
+        });
+        setTempSelectedColor((prev) => {
+          return [prev[1], prev[3], prev[0], prev[2]];
+        });
+        break;
     }
   };
 
@@ -155,6 +169,12 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
     setTempSelectedColor([GALA_RED, GALA_YELLOW, GALA_YELLOW, GALA_RED]);
   }
 
+  const pasteColorHandler = (pastedColor) => {
+    let newArr = [...tempSelectedColors];
+    newArr[selectedColorIndex] = pastedColor;
+    setTempSelectedColor(newArr);
+  }
+
   return (
     <>
       <Modal visible={showColorPickerModal} transparent>
@@ -163,7 +183,7 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
             flex: 1,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "#000000c4",
+            backgroundColor: "#470404c4",
           }}
         >
           <View
@@ -174,6 +194,7 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
           >
             <CustomColorPicker
               selectedColor={tempSelectedColors[selectedColorIndex]}
+              setSelectedColor={pasteColorHandler}
               onSelectColor={tempSelectedColorHandler}
             />
 
@@ -189,7 +210,6 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
         </View>
       </Modal>
 
-      {/* <TabView renderScene={renderScene} /> */}
       <View style={styles.container}>
         <View style={styles.innerContainer}>
           <CustomSelectDropdown
@@ -197,7 +217,6 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
             onSelect={splitModeSelectHandler}
             initialValue={selectedSplitMode}
           />
-
 
           {selectedSplitMode === splitMode.Horizontal && (
             <>
@@ -210,10 +229,9 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
 
               <View style={{ alignItems: "center" }}>
                 <CustomButton
-                  bgColor="#d1d1d1"
-                  iconName="swap"
+                  bgColor={ICON_BACKGROUND}
+                  iconName="swap-vert"
                   paddingHorizontal={12}
-                  iconRotation={90}
                   onPress={swapColorsHandler.bind(null, 0)}
                 />
               </View>
@@ -245,8 +263,8 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
 
                 <View style={{ justifyContent: "center" }}>
                   <CustomButton
-                    bgColor="#d1d1d1"
-                    iconName="swap"
+                    bgColor={ICON_BACKGROUND}
+                    iconName="swap-horiz"
                     paddingHorizontal={12}
                     onPress={swapColorsHandler.bind(null, 0)}
                   />
@@ -281,8 +299,8 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
 
                 <View style={{ justifyContent: "center" }}>
                   <CustomButton
-                    bgColor="#d1d1d1"
-                    iconName="swap"
+                    bgColor={ICON_BACKGROUND}
+                    iconName="swap-horiz"
                     paddingHorizontal={12}
                     onPress={swapColorsHandler.bind(null, 0)}
                   />
@@ -310,23 +328,8 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
                   }}
                 >
                   <CustomButton
-                    bgColor="#d1d1d1"
-                    iconName="swap"
-                    paddingHorizontal={12}
-                    iconRotation={90}
-                    onPress={swapColorsHandler.bind(null, 3)}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    width: 50,
-                    alignItems: "center",
-                  }}
-                >
-                  <CustomButton
-                    bgColor="#33c452ff"
-                    iconName="swap"
+                    bgColor={ICON_BACKGROUND}
+                    iconName="swap-vert"
                     paddingHorizontal={12}
                     onPress={swapColorsHandler.bind(null, 3)}
                   />
@@ -339,10 +342,24 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
                   }}
                 >
                   <CustomButton
-                    bgColor="#2636caff"
-                    iconName="swap"
+                    bgColor={ICON_BACKGROUND}
+                    iconName="rotate-right"
                     paddingHorizontal={12}
-                    onPress={swapColorsHandler.bind(null, 3)}
+                    onPress={swapColorsHandler.bind(null, 4)}
+                  />
+                </View>
+
+                <View
+                  style={{
+                    width: 50,
+                    alignItems: "center",
+                  }}
+                >
+                  <CustomButton
+                    bgColor={ICON_BACKGROUND}
+                    iconName="rotate-left"
+                    paddingHorizontal={12}
+                    onPress={swapColorsHandler.bind(null, 5)}
                   />
                 </View>
 
@@ -353,10 +370,9 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
                   }}
                 >
                   <CustomButton
-                    bgColor="#d1d1d1"
-                    iconName="swap"
+                    bgColor={ICON_BACKGROUND}
+                    iconName="swap-vert"
                     paddingHorizontal={12}
-                    iconRotation={90}
                     onPress={swapColorsHandler.bind(null, 1)}
                   />
                 </View>
@@ -378,8 +394,8 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
 
                 <View style={{ justifyContent: "center" }}>
                   <CustomButton
-                    bgColor="#d1d1d1"
-                    iconName="swap"
+                    bgColor={ICON_BACKGROUND}
+                    iconName="swap-horiz"
                     paddingHorizontal={12}
                     onPress={swapColorsHandler.bind(null, 2)}
                   />
@@ -397,7 +413,7 @@ export default function Split({ applyChanges, setApplyChanges, applyGalaColors }
           )}
         </View>
 
-        <CustomButton title="solo il gala" onPress={soloIlGalaHandler} bgColor={GALA_RED} titleColor={GALA_YELLOW} rippleColor={GALA_YELLOW} />
+        <CustomButton title="solo Il gala" onPress={soloIlGalaHandler} bgColor={GALA_RED} titleColor={GALA_YELLOW} rippleColor={GALA_YELLOW} />
       </View>
     </>
   );
@@ -408,7 +424,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 12,
     paddingBottom: 20,
-    // backgroundColor: "red",
     justifyContent: "space-between"
   },
   innerContainer: {

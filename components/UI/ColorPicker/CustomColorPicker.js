@@ -1,9 +1,9 @@
-import CustomButton from "./CustomButton";
+import CustomButton from "../CustomButton";
 import HSLColorPicker from "./HSLColorPicker";
 import RGBColorPicker from "./RGBColorPicker";
-import TabView from "./TabView";
+import TabView from "../TabView";
 
-export default function CustomColorPicker({ selectedColor, onSelectColor }) {
+export default function CustomColorPicker({ selectedColor, setSelectedColor, onSelectColor }) {
   const renderScene = [
     {
       key: "hsl",
@@ -11,6 +11,7 @@ export default function CustomColorPicker({ selectedColor, onSelectColor }) {
       render: (
         <HSLColorPicker
           selectedColor={selectedColor}
+          setSelectedColor={setSelectedColor}
           onSelectColor={onSelectColor}
         />
       ),
@@ -21,6 +22,7 @@ export default function CustomColorPicker({ selectedColor, onSelectColor }) {
       render: (
         <RGBColorPicker
           selectedColor={selectedColor}
+          setSelectedColor={setSelectedColor}
           onSelectColor={onSelectColor}
         />
       ),

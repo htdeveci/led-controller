@@ -10,11 +10,13 @@ import ColorPicker, {
   PreviewText,
   RedSlider,
 } from "reanimated-color-picker";
-import { TEXT_LIGHT } from "../../globals/Colors";
-import { LINE_HEIGHT } from "../../globals/Constants";
+import { TEXT_LIGHT } from "../../../globals/Colors";
+import { LINE_HEIGHT } from "../../../globals/Constants";
+import ColorPickerPreview from "./ColorPickerPreview";
 
 export default React.memo(function RGBColorPicker({
   selectedColor,
+  setSelectedColor,
   onSelectColor,
 }) {
   return (
@@ -24,7 +26,7 @@ export default React.memo(function RGBColorPicker({
       value={selectedColor}
       onComplete={onSelectColor}
     >
-      <Preview colorFormat="rgb" style={styles.preview} hideInitialColor />
+      <ColorPickerPreview colorFormat="rgb" selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
 
       <View style={styles.labelContainer}>
         <Text style={styles.labelText}>Red</Text>
@@ -46,10 +48,6 @@ const styles = StyleSheet.create({
   labelContainer: {
     flexDirection: "row",
     alignItems: "center",
-  },
-  preview: {
-    height: LINE_HEIGHT,
-    borderRadius: 12,
   },
   labelText: {
     color: TEXT_LIGHT,

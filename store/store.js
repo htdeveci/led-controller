@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import thunk from "redux-thunk";
 
 import connectionReducer from "./connectionSlice";
+import colorReducer from "./colorSlice";
 
 const persistConfig = {
   key: "root",
@@ -12,6 +13,7 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   connection: connectionReducer,
+  color: colorReducer,
 });
 
 const persistedReducers = persistReducer(persistConfig, rootReducer);

@@ -12,12 +12,15 @@ import ColorPicker, {
   RedSlider,
   SaturationSlider,
 } from "reanimated-color-picker";
-import { APP_BACKGROUND, TEXT_LIGHT } from "../../globals/Colors";
+import { APP_BACKGROUND, ICON_BACKGROUND, TEXT_LIGHT } from "../../../globals/Colors";
 import React from "react";
-import { LINE_HEIGHT } from "../../globals/Constants";
+import { LINE_HEIGHT } from "../../../globals/Constants";
+import CustomButton from "../CustomButton";
+import ColorPickerPreview from "./ColorPickerPreview";
 
 export default React.memo(function HSLColorPicker({
   selectedColor,
+  setSelectedColor,
   onSelectColor,
 }) {
   return (
@@ -27,7 +30,8 @@ export default React.memo(function HSLColorPicker({
       value={selectedColor}
       onComplete={onSelectColor}
     >
-      <Preview colorFormat="hsl" style={styles.preview} hideInitialColor />
+      <ColorPickerPreview colorFormat="hsl" selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
+
       <Panel3 centerChannel="hsl-saturation" />
 
       <View style={styles.labelContainer}>
@@ -43,13 +47,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
   },
-  preview: {
-    height: LINE_HEIGHT,
-    borderRadius: 12,
-  },
   labelText: {
     color: TEXT_LIGHT,
     width: 110,
     fontSize: 18,
-  },
+  }
 });
