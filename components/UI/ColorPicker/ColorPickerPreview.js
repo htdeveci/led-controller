@@ -21,7 +21,7 @@ export default function ColorPickerPreview({ colorFormat, selectedColor, setSele
 
     return (
         <View style={styles.previewContainer}>
-            <CustomButton bgColor={ICON_BACKGROUND} iconName="content-paste" paddingHorizontal={12} onPress={pasteColorHandler} />
+            <CustomButton bgColor={copiedColor != "" ? copiedColor : ICON_BACKGROUND} iconName="content-paste" paddingHorizontal={12} onPress={pasteColorHandler} />
             <Preview colorFormat={colorFormat} style={styles.preview} hideInitialColor />
             <CustomButton bgColor={ICON_BACKGROUND} iconName="content-copy" paddingHorizontal={12} onPress={copyColorHandler} />
         </View>
