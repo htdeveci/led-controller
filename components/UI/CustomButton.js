@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Pressable, StyleSheet, Switch, Text, View } from "react-native";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { colorKit } from "reanimated-color-picker";
+
 import { PRIMARY, PRIMARY_DARK, TEXT_LIGHT } from "../../globals/Colors";
 import { LINE_HEIGHT } from "../../globals/Constants";
 // import AntDesign from "@expo/vector-icons/AntDesign";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function CustomButton({
   onPress,
@@ -27,7 +28,7 @@ export default function CustomButton({
 
   useEffect(() => {
     if (!titleColor) setTextColor(calculateTextColor());
-    if (!rippleColor) setRippleColor(calculateRippleColor());
+    // if (!rippleColor) setRippleColor(calculateRippleColor());
   }, [bgColor]);
 
   const calculateRippleColor = () => {
@@ -53,7 +54,7 @@ export default function CustomButton({
           },
         ]}
         onPress={onPress}
-        android_ripple={{ color: rColor }}
+        // android_ripple={{ color: "red" }}
       >
         <View style={styles.innerContainer}>
           {iconName && (
@@ -61,7 +62,7 @@ export default function CustomButton({
               name={iconName}
               size={iconSize}
               color={tColor}
-            // style={{ transform: "rotate(" + iconRotation + "deg)" }}
+              // style={{ transform: "rotate(" + iconRotation + "deg)" }}
             />
           )}
 
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   pressable: {
-    backgroundColor: "green",
+    // backgroundColor: "green",
     // height: LINE_HEIGHT,
     justifyContent: "center",
     alignItems: "center",
