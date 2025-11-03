@@ -9,9 +9,9 @@ export const TEXT_DARK = "#27250a";
 
 export const BACKGROUND_LIGHT = "#e9e8e3";
 export const APP_BACKGROUND = "#363636";
-
-export const GALA_RED = "#a32638";
-export const GALA_YELLOW = "#fcb514";
+0;
+export const GALA_RED = "#ff0000";
+export const GALA_YELLOW = "#ffa000";
 
 export const FOOTBALL = "#46ff00";
 
