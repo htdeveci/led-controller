@@ -15,14 +15,14 @@ import {
   ERROR,
   TEXT_DARK,
   TEXT_LIGHT,
-} from "../globals/Colors";
-import CustomButton from "./UI/CustomButton";
-import Static from "./LedModes/Static";
-import Loop from "./LedModes/Loop";
-import Split from "./LedModes/Split";
-import { LINE_HEIGHT } from "../globals/Constants";
-import CustomSelectDropdown from "./UI/CustomSelectDropdown";
-import { setServerIP } from "../store/connectionSlice";
+} from "../../globals/Colors";
+import CustomButton from "../UI/CustomButton";
+import Static from "../LedModes/Static";
+import Loop from "../LedModes/Loop";
+import Split from "../LedModes/Split";
+import { LINE_HEIGHT } from "../../globals/Constants";
+import CustomSelectDropdown from "../UI/CustomSelectDropdown";
+import { setServerIP } from "../../store/connectionSlice";
 
 export default function BatLamp() {
   const LedModes = {
