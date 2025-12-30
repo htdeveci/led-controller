@@ -54,22 +54,22 @@ export default function CustomButton({
           },
         ]}
         onPress={onPress}
-        // android_ripple={{ color: "red" }}
+      // android_ripple={{ color: "red" }}
       >
         <View style={styles.innerContainer}>
+          {title && (
+            <Text style={[styles.text, { color: tColor, textAlign: "center" }]}>
+              {title}
+            </Text>
+          )}
+
           {iconName && (
             <MaterialIcons
               name={iconName}
               size={iconSize}
               color={tColor}
-              // style={{ transform: "rotate(" + iconRotation + "deg)" }}
+            // style={{ transform: "rotate(" + iconRotation + "deg)" }}
             />
-          )}
-
-          {title && (
-            <Text style={[styles.text, { color: tColor, textAlign: "center" }]}>
-              {title}
-            </Text>
           )}
 
           {enableSwitch && (
