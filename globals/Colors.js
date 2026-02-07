@@ -3,6 +3,9 @@ export const PRIMARY_DARK = "#2831aa";
 export const PRIMARY_LIGHT = "#bcc1ff";
 
 export const ERROR = "#f03a33";
+export const ERROR_DISABLED = "#902420";
+
+export const SUCCESS = "#27b115";
 
 export const TEXT_LIGHT = "#fffdf2";
 export const TEXT_DARK = "#27250a";

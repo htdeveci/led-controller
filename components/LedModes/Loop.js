@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 
 import { PRIMARY, PRIMARY_LIGHT, TEXT_LIGHT } from "../../globals/Colors";
 
-export default function Loop({ applyChanges, setApplyChanges }) {
-  const serverUrl = useSelector((state) => state.connection.serverUrl);
+export default function Loop({ espId, ledId, applyChanges, setApplyChanges }) {
+  const espUrl = useSelector((state) => state.connection.esp[espId].url);
   const [speed, setSpeed] = useState(1500);
   const [finalSpeed, setFinalSpeed] = useState(1500);
 
@@ -19,9 +19,7 @@ export default function Loop({ applyChanges, setApplyChanges }) {
 
   const activateLoopMode = async () => {
     try {
-      console.log(speed);
-      console.log(finalSpeed);
-      const response = await fetch(`${serverUrl}loop?speed=${finalSpeed}`);
+      const response = await fetch(`${espUrl}loop?speed=${finalSpeed}&ledId=${ledId}`);
       const responseData = await response.json();
       console.log(responseData.message);
     } catch (err) {

@@ -6,8 +6,9 @@ import CustomButton from "../UI/CustomButton";
 import { FOOTBALL } from "../../globals/Colors";
 import { StyleSheet, View } from "react-native";
 
-export default function Static({ applyChanges, setApplyChanges }) {
-  const serverUrl = useSelector((state) => state.connection.serverUrl);
+export default function Static({ espId, ledId, applyChanges, setApplyChanges }) {
+  // const espUrl = useSelector((state) => state.connection.esp[espId].url);
+  const espArray = useSelector((state) => state.connection.esp);
   const [selectedColor, setSelectedColor] = useState("#ff0000");
 
   /* function decimalToHex(d, padding) {
@@ -25,19 +26,39 @@ export default function Static({ applyChanges, setApplyChanges }) {
   } */
 
   useEffect(() => {
-    fetchColor();
-  }, []);
+    if (ledId < 100) {
+      if (espArray.length > 0) {
+        if (espId < 100) {
+          fetchColor(espArray[espId].url);
+        }
+        else {
+          espArray.forEach(esp => {
+            fetchColor(esp.url);
+          });
+        }
+      }
+    }
+  }, [espArray.length]);
 
   useEffect(() => {
     if (applyChanges) {
-      changeColor();
+      if (espArray.length > 0) {
+        if (espId < 100) {
+          changeColor(espArray[espId].url);
+        }
+        else {
+          espArray.forEach(esp => {
+            changeColor(esp.url);
+          });
+        }
+      }
       setApplyChanges(false);
     }
   }, [applyChanges]);
 
-  const fetchColor = async () => {
+  const fetchColor = async (espUrl) => {
     try {
-      const response = await fetch(serverUrl + "static");
+      const response = await fetch(espUrl + "static?ledId=" + ledId);
       const responseData = await response.json();
       setSelectedColor(responseData.colorHex);
     } catch (err) {
@@ -45,11 +66,11 @@ export default function Static({ applyChanges, setApplyChanges }) {
     }
   };
 
-  const changeColor = async () => {
+  const changeColor = async (espUrl) => {
     try {
       const formData = new FormData();
       formData.append("colorHex", selectedColor.substring(1));
-      const response = await fetch(serverUrl + "static", {
+      const response = await fetch(espUrl + "static?ledId=" + ledId, {
         method: "POST",
         body: formData,
       });

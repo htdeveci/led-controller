@@ -24,14 +24,15 @@ import { LINE_HEIGHT } from "../../globals/Constants";
 import CustomSelectDropdown from "../UI/CustomSelectDropdown";
 import { setServerIP } from "../../store/connectionSlice";
 
-export default function BatLamp() {
+export default function BatLamp({ route }) {
   const LedModes = {
     Static: "Static",
     Split: "Split",
     Loop: "Loop",
     Breath: "Breath",
   };
-  const serverIP = useSelector((state) => state.connection.serverIP);
+  const { espId } = route.params;
+  const serverIP = useSelector((state) => state.connection.esp[espId]).ip;
   const dispatch = useDispatch();
   const [selectedLedMode, setSelectedLedMode] = useState(LedModes.Static);
   const [ledState, setLedState] = useState(false);
@@ -41,14 +42,16 @@ export default function BatLamp() {
   const [connectionTryingNow, setConnectionTryingNow] = useState(false);
   const [ipAddressForLed, setIpAddressForLed] = useState(serverIP);
 
-  useEffect(() => {
-    if (__DEV__)
-      setIsLedConnected(true);
-    else
-      connectLed();
+  /*useEffect(() => {
+    console.log(serverIP)
+    connectLed();
+      if (__DEV__)
+       setIsLedConnected(true);
+     else
+       connectLed(); 
   }, []);
 
-  const connectLed = async () => {
+  /* const connectLed = async () => {
     try {
       const response = await fetch(`http://${ipAddressForLed}/` + "status");
       const responseData = await response.json();
@@ -57,7 +60,7 @@ export default function BatLamp() {
     } catch (err) {
       throw err;
     }
-  };
+  }; */
 
   const connectLedButtonHandler = async () => {
     try {
@@ -77,7 +80,7 @@ export default function BatLamp() {
     setSelectedLedMode(selectedMode);
   };
 
-  const turnOnLed = async () => {
+  /* const turnOnLed = async () => {
     try {
       const response = await fetch(`http://${ipAddressForLed}/` + "on");
       const responseData = await response.json();
@@ -95,7 +98,7 @@ export default function BatLamp() {
     } catch (err) {
       console.log(err);
     }
-  };
+  }; */
 
   const changeLedStateHandler = () => {
     if (ledState) {
@@ -121,6 +124,7 @@ export default function BatLamp() {
 
           {selectedLedMode === LedModes.Static && (
             <Static
+              espId={espId}
               applyChanges={applyChanges}
               setApplyChanges={setApplyChanges}
             />
@@ -178,10 +182,11 @@ export default function BatLamp() {
 
 const styles = StyleSheet.create({
   container: {
-    width: Dimensions.get("window").width * 0.8,
-    height: Dimensions.get("window").height * 0.8,
+    // width: Dimensions.get("window").width * 0.8,
+    // height: Dimensions.get("window").height * 1,
     top: StatusBar.currentHeight / 2,
     justifyContent: "space-between",
+    backgroundColor: "red"
   },
   buttonContainer: {
     gap: 20,

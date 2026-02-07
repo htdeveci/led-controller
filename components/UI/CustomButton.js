@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Switch, Text, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { colorKit } from "reanimated-color-picker";
 
-import { PRIMARY, PRIMARY_DARK, TEXT_LIGHT } from "../../globals/Colors";
+import { ERROR_DISABLED, ERROR, PRIMARY, PRIMARY_DARK, TEXT_LIGHT } from "../../globals/Colors";
 import { LINE_HEIGHT } from "../../globals/Constants";
 // import AntDesign from "@expo/vector-icons/AntDesign";
 
@@ -20,11 +20,17 @@ export default function CustomButton({
   iconName = false,
   iconSize = 24,
   paddingHorizontal = 20,
+  disabled = false,
+  disabledBgColor = ERROR_DISABLED
 }) {
   const [tColor, setTextColor] = useState(titleColor ? titleColor : TEXT_LIGHT);
   const [rColor, setRippleColor] = useState(
     rippleColor ? rippleColor : PRIMARY_DARK
   );
+
+  if (disabled) {
+    bgColor = disabledBgColor;
+  }
 
   useEffect(() => {
     if (!titleColor) setTextColor(calculateTextColor());
@@ -45,6 +51,7 @@ export default function CustomButton({
   return (
     <View style={[styles.container, buttonStyle]}>
       <Pressable
+        disabled={disabled}
         style={[
           styles.pressable,
           {
@@ -74,6 +81,7 @@ export default function CustomButton({
 
           {enableSwitch && (
             <Switch
+              disabled={disabled}
               trackColor={{ false: "#767577", true: "#a4d498" }}
               thumbColor={switchState ? "#27b115" : "#f4f3f4"}
               onChange={onPress}
