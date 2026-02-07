@@ -19,8 +19,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.asafgwe.ledcontroller",
-      "newArchEnabled": false
+      "package": "com.asafgwe.ledcontroller"
     },
     "web": {
       "favicon": "./assets/favicon.png"
