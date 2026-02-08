@@ -6,7 +6,7 @@ export const LED_ESP_ENUM = Object.freeze({
     TvStand: { ledId: 0, espId: 1 },
     BookshelfBottom: { ledId: 1, espId: 1 },
     BookshelfShort: { ledId: 2, espId: 1 },
-    BookshelfLong: { ledId: 3, espId: 1 },
+    BookshelfMiddle: { ledId: 3, espId: 1 },
     BookshelfTop: { ledId: 4, espId: 1 },
     AllLeds: { ledId: 100, espId: 100 },
     Bookshelf: { ledId: 101, espId: 1 }

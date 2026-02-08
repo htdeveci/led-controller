@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import { LED_ESP_ENUM, LED_MODES } from "../../globals/Constants";
+import { StyleSheet, StatusBar, View, Dimensions, Text } from "react-native";
 import { useSelector } from "react-redux";
+
+import { LED_MODES } from "../../globals/Constants";
 import CustomButton from "../UI/CustomButton";
 import Static from "../LedModes/Static";
-import Loop from "../LedModes/Loop";
-import { StyleSheet, StatusBar, View, Dimensions } from "react-native";
 import CustomSelectDropdown from "../UI/CustomSelectDropdown";
+import { TEXT_LIGHT } from "../../globals/Colors";
 
 export default function BaseLedComponent({ route }) {
-    const { espId, ledId } = route.params;
+    const { title, espId, ledId } = route.params;
     const espArray = useSelector((state) => state.connection.esp);
     const [ledState, setLedState] = useState(false);
     const [selectedLedMode, setSelectedLedMode] = useState(LED_MODES.Static);
@@ -31,8 +32,10 @@ export default function BaseLedComponent({ route }) {
         try {
             const response = await fetch(espUrl + "status?ledId=" + ledId);
             const responseData = await response.json();
-            setLedState(responseData.ledState ? true : false);
-            // setIsLedConnected(true);
+            if (espId < 100)
+                setLedState(responseData.ledState ? true : false);
+            else
+                setLedState(prev => prev || responseData.ledState);
         } catch (err) {
             throw err;
         }
@@ -88,6 +91,8 @@ export default function BaseLedComponent({ route }) {
 
     return <>
         <View style={styles.container}>
+            <Text style={styles.ledLabel}>{title}</Text>
+
             <CustomSelectDropdown
                 data={Object.keys(LED_MODES)}
                 onSelect={ledModeSelectHandler}
@@ -110,25 +115,42 @@ export default function BaseLedComponent({ route }) {
                     setApplyChanges={setApplyChanges}
                 />
             )} */}
+
+
+            <View style={styles.buttonContainer}>
+                <CustomButton
+                    buttonStyle={styles.buttons}
+                    onPress={changeLedStateHandler}
+                    title={`${ledState ? "Opened" : "Closed"}`}
+                    // title="leds"
+                    enableSwitch
+                    switchState={ledState}
+                />
+                <CustomButton buttonStyle={styles.buttons} title="apply" onPress={applyHandler} />
+            </View>
         </View>
-
-        <CustomButton title="apply" onPress={applyHandler} />
-
-        <CustomButton
-            onPress={changeLedStateHandler}
-            title={`LEDs ${ledState ? "Opened" : "Closed"}`}
-            enableSwitch
-            switchState={ledState}
-        />
     </>
 }
 
 const styles = StyleSheet.create({
     container: {
-        width: Dimensions.get("window").width * 0.8,
-        height: Dimensions.get("window").height * 0.8,
-        top: StatusBar.currentHeight / 2,
+        width: Dimensions.get("window").width * 0.9,
+        height: Dimensions.get("window").height * 0.85,
+        // top: StatusBar.currentHeight / 2,
         justifyContent: "space-between",
         // backgroundColor: "red"
+    },
+    ledLabel: {
+        color: TEXT_LIGHT,
+        fontSize: 24,
+        textAlign: "center",
+        marginBottom: 10
+    },
+    buttonContainer: {
+        flexDirection: "row",
+        gap: 10,
+    },
+    buttons: {
+        flex: 1
     }
 });

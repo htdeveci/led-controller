@@ -93,7 +93,7 @@ export default function Static({ espId, ledId, applyChanges, setApplyChanges }) 
         onSelectColor={onSelectColor}
       />
 
-      <CustomButton title="Football Time" bgColor={FOOTBALL} onPress={onSelectColor.bind(null, { hex: FOOTBALL })} />
+      {/* <CustomButton title="Football Time" bgColor={FOOTBALL} onPress={onSelectColor.bind(null, { hex: FOOTBALL })} /> */}
     </View>
   );
 }
