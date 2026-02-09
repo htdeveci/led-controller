@@ -28,7 +28,8 @@ export default React.memo(function HSLColorPicker({
       thumbScaleAnimationValue={1.1}
       style={{ gap: 20 }}
       value={selectedColor}
-      onComplete={onSelectColor}
+      // onCompleteJS={() => { 'worklet'; onSelectColor() }}
+      onCompleteJS={onSelectColor}
     >
       <ColorPickerPreview colorFormat="hsl" selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
 

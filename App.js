@@ -14,6 +14,7 @@ import Esp from "./components/Esp";
 import BatLamp from "./components/Leds/BatLamp";
 import TvStand from "./components/Leds/TvStand";
 import BaseLedComponent from "./components/Leds/BaseLedComponent";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 // import Deneme from "./components/Deneme";
 
 const RootStack = createNativeStackNavigator({
@@ -47,7 +48,9 @@ export default function App() {
       {/* <StatusBarReact backgroundColor={"red"} barStyle={"light-content"} /> */}
       {/* <StatusBar backgroundColor={"red"} /> */}
       <PersistGate loading={null} persistor={persistor}>
-        <Navigation />
+        <GestureHandlerRootView>
+          <Navigation />
+        </GestureHandlerRootView>
         {/* <View style={styles.container}>
           <Deneme /> */}
         {/* <Home />

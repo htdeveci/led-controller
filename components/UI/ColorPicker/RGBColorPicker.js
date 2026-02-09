@@ -24,7 +24,8 @@ export default React.memo(function RGBColorPicker({
       thumbScaleAnimationValue={1.1}
       style={{ gap: 20 }}
       value={selectedColor}
-      onComplete={onSelectColor}
+      // onCompleteJS={() => { 'worklet'; onSelectColor() }}
+      onCompleteJS={onSelectColor}
     >
       <ColorPickerPreview colorFormat="rgb" selectedColor={selectedColor} setSelectedColor={setSelectedColor} />
 
