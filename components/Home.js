@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StatusBar, StyleSheet, Text, View } from "react-native";
 import BatLamp from "./Leds/BatLamp";
 import Esp from "./Esp";
 import CustomButton from "./UI/CustomButton";
 import { APP_BACKGROUND, ERROR, SUCCESS } from "../globals/Colors";
 import { useNavigation } from "@react-navigation/native";
-import { StatusBar } from "expo-status-bar";
+// import { StatusBar } from "expo-status-bar";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { LED_ESP_ENUM } from "../globals/Constants";
@@ -56,7 +56,7 @@ export default function Home() {
     }];
 
     const navigateToLedHandler = (ledInfo) => {
-        console.log(ledInfo)
+        // console.log(ledInfo)
         navigation.navigate("BaseLedComponent", { title: ledInfo.title, ...ledInfo.led });
     }
 
@@ -86,24 +86,13 @@ export default function Home() {
 
     return <>
         {/* <View style={styles.outerContainer}> */}
-        {/* <StatusBar backgroundColor="red" /> */}
         <View style={styles.innerContainer} >
             <View style={styles.ledButtonContainer} >
                 {
                     ledInfos.map((ledInfo) => {
-                        /*  if (ledInfo.led.espId < 100)
-                             return <CustomButton key={ledInfo.key} title={ledInfo.title} onPress={() => navigateToLedHandler(ledInfo)} disabled={!isEspConnected[ledInfo.led.espId]} bgColor={SUCCESS} buttonStyle={ledInfo.buttonStyle} />
-                         else */
                         return <CustomButton key={ledInfo.key} title={ledInfo.title} onPress={() => navigateToLedHandler(ledInfo)} disabled={ledInfo.led.espId < 100 ? !isEspConnected[ledInfo.led.espId] : !isEspConnected[0] || !isEspConnected[1]} bgColor={SUCCESS} buttonStyle={ledInfo.buttonStyle} />
                     })
                 }
-                {/* <CustomButton key={`bat-lamp-${isEspConnected[0]}`} title={"Bat Lamp"} onPress={() => navigateToLedHandler(LED_ESP_ENUM.BatLamp)} bgColor={SUCCESS} disabled={!isEspConnected[0]} buttonStyle={styles.led} />
-                <CustomButton key={`tv-stand-${isEspConnected[1]}`} title={"TV Stand"} onPress={() => navigateToLedHandler(LED_ESP_ENUM.TvStand)} bgColor={SUCCESS} disabled={!isEspConnected[1]} buttonStyle={styles.led} />
-                <CustomButton key={`bookshelf-${isEspConnected[1]}`} title={"Bookshelf"} onPress={() => navigateToLedHandler(LED_ESP_ENUM.Bookshelf)} bgColor={SUCCESS} disabled={!isEspConnected[1]} buttonStyle={styles.allShelves} />
-                <CustomButton key={`bookshelf-top-${isEspConnected[1]}`} title={"Top Shelf"} onPress={() => navigateToLedHandler(LED_ESP_ENUM.BookshelfTop)} bgColor={SUCCESS} disabled={!isEspConnected[1]} buttonStyle={styles.shelf} />
-                <CustomButton key={`bookshelf-long-${isEspConnected[1]}`} title={"Long Shelf"} onPress={() => navigateToLedHandler(LED_ESP_ENUM.BookshelfLong)} bgColor={SUCCESS} disabled={!isEspConnected[1]} buttonStyle={styles.shelf} />
-                <CustomButton key={`bookshelf-short-${isEspConnected[1]}`} title={"Short Shelf"} onPress={() => navigateToLedHandler(LED_ESP_ENUM.BookshelfShort)} bgColor={SUCCESS} disabled={!isEspConnected[1]} buttonStyle={styles.shelf} />
-                <CustomButton key={`bookshelf-bottom-${isEspConnected[1]}`} title={"Bottom Shelf"} onPress={() => navigateToLedHandler(LED_ESP_ENUM.BookshelfBottom)} bgColor={SUCCESS} disabled={!isEspConnected[1]} buttonStyle={styles.shelf} /> */}
             </View>
 
             <View style={styles.espButtonContainer}>

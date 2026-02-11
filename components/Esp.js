@@ -67,8 +67,9 @@ export default function Esp({ id, isEspConnected, onEspConnected, onEspFailed })
             <Text style={{ fontSize: 20 }}>{esp.name}</Text>
             <TextInput
                 style={styles.inputTextForIp}
-                value={espIpState}
+                keyboardType="number-pad"
                 maxLength={15}
+                value={espIpState}
                 onChangeText={setEspIpState}
             />
         </CustomModal>

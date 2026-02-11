@@ -1,5 +1,4 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, StatusBar as StatusBarReact } from "react-native";
+import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { configureReanimatedLogger } from "react-native-reanimated";
 import { Provider } from "react-redux";
 
@@ -20,15 +19,16 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 const RootStack = createNativeStackNavigator({
   initialRouteName: 'Home',
   screenOptions: {
-    // statusBarHidden: true,
     contentStyle: {
       backgroundColor: APP_BACKGROUND,
+      // paddingTop: 10,
       justifyContent: "center",
       alignItems: "center",
-      // top: StatusBarReact.currentHeight / 2,
     },
     header: null,
-    // statusBarStyle: "dark",
+    statusBarAnimation: "fade",
+    statusBarStyle: "auto",
+    animation: "fade"
   },
   screens: {
     Home: Home,
@@ -43,20 +43,16 @@ const Navigation = createStaticNavigation(RootStack);
 export default function App() {
   // AsyncStorage.clear();
   configureReanimatedLogger({ strict: false });
-  return (
+  return (<>
+    {/* <StatusBar barStyle="light-content" /> */}
     <Provider store={store}>
-      {/* <StatusBarReact backgroundColor={"red"} barStyle={"light-content"} /> */}
-      {/* <StatusBar backgroundColor={"red"} /> */}
       <PersistGate loading={null} persistor={persistor}>
         <GestureHandlerRootView>
           <Navigation />
         </GestureHandlerRootView>
-        {/* <View style={styles.container}>
-          <Deneme /> */}
-        {/* <Home />
-        </View>*/}
       </PersistGate>
     </Provider>
+  </>
   );
 }
 

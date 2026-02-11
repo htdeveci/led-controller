@@ -3,7 +3,7 @@ import { Pressable, StyleSheet, Switch, Text, View } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { colorKit } from "reanimated-color-picker";
 
-import { ERROR_DISABLED, ERROR, PRIMARY, PRIMARY_DARK, TEXT_LIGHT } from "../../globals/Colors";
+import { ERROR_DISABLED, ERROR, PRIMARY, PRIMARY_DARK, TEXT_LIGHT, TEXT_DARK } from "../../globals/Colors";
 import { LINE_HEIGHT } from "../../globals/Constants";
 // import AntDesign from "@expo/vector-icons/AntDesign";
 
@@ -23,10 +23,8 @@ export default function CustomButton({
   disabled = false,
   disabledBgColor = ERROR_DISABLED
 }) {
-  const [tColor, setTextColor] = useState(titleColor ? titleColor : TEXT_LIGHT);
-  const [rColor, setRippleColor] = useState(
-    rippleColor ? rippleColor : PRIMARY_DARK
-  );
+  const [tColor, setTextColor] = useState(titleColor ?? TEXT_LIGHT);
+  const [rColor, setRippleColor] = useState(rippleColor ?? PRIMARY_DARK + "50");
 
   if (disabled) {
     bgColor = disabledBgColor;
@@ -34,18 +32,18 @@ export default function CustomButton({
 
   useEffect(() => {
     if (!titleColor) setTextColor(calculateTextColor());
-    // if (!rippleColor) setRippleColor(calculateRippleColor());
+    if (!rippleColor) setRippleColor(calculateRippleColor());
   }, [bgColor]);
 
-  const calculateRippleColor = () => {
-    const hslColor = colorKit.HSL(bgColor).object();
-    colorKit.contrastRatio;
-    const newLuminance = hslColor.l > 30 ? hslColor.l - 20 : hslColor.l + 20;
-    return `hsl(${hslColor.h},${hslColor.s},${newLuminance})`;
+  const calculateTextColor = () => {
+    return colorKit.isDark(bgColor) ? TEXT_LIGHT : TEXT_DARK;
   };
 
-  const calculateTextColor = () => {
-    return colorKit.isDark(bgColor) ? "#e0e0e0" : "#242424";
+  const calculateRippleColor = () => {
+    const bgColorHSL = colorKit.HSL(bgColor).object();
+    const newLuminance = bgColorHSL.l > 25 ? bgColorHSL.l - 20 : bgColorHSL.l + 20;
+    const newColor = colorKit.RGB({ ...bgColorHSL, l: newLuminance, a: 0.3 }).string();
+    return newColor;
   };
 
   return (
@@ -61,7 +59,7 @@ export default function CustomButton({
           },
         ]}
         onPress={onPress}
-      // android_ripple={{ color: "red" }}
+        android_ripple={{ color: rColor, foreground: true }}
       >
         <View style={styles.innerContainer}>
           {title && (
@@ -99,7 +97,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: 12,
     // height: 100,
-    // backgroundColor: "blue",
+    // backgroundColor: bgColor,
     justifyContent: "center",
   },
   pressable: {
